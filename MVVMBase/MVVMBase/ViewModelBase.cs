@@ -7,6 +7,7 @@ using System.Windows;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections;
+using System.Windows.Input;
 
 namespace MVVMBase
 {
@@ -107,4 +108,57 @@ namespace MVVMBase
         #endregion
     }
     #endregion
+
+    #region Class : DelegateCommand(No parameter)
+    public sealed class DelegateCommand : ICommand
+    {
+        private Action _execute;
+        private Func<bool> _canExecute;
+
+        public DelegateCommand(Action execute): this(execute, ()=> true)
+        {
+
+        }
+
+        public DelegateCommand(Action execute, Func<bool> canExecute)
+        {
+            _execute = execute;
+            _canExecute = canExecute;
+        }
+
+        public bool CanExecute()
+        {
+            return _canExecute();
+        }
+
+        public void Execute()
+        {
+            _execute();
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove {CommandManager.RequerySuggested -= value; }
+        }
+
+        #region ICommand
+        public bool CanExecute(object parameter)
+        {
+            return CanExecute();
+        }
+
+        public void Execute(object parameter)
+        {
+            Execute();
+        }
+        #endregion
+    }
+    #endregion
+
+    #region Class : DelegateCommand
+
+
+    #endregion
+
 }
