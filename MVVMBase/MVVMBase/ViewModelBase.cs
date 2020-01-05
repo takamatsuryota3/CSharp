@@ -40,7 +40,7 @@ namespace MVVMBase
         /// <summary>
         /// IDataErrorInfo用のエラーメッセージを保持する辞書
         /// </summary>
-        private Dictionary<string, string[]> ErrorMessages = new Dictionary<string, string[]>();
+        private Dictionary<string, string> ErrorMessages = new Dictionary<string, string>();
 
         /// <summary>
         /// IDaraErrorInfo.Errorの実装
@@ -50,6 +50,11 @@ namespace MVVMBase
             get => (ErrorMessages.Count > 0) ? "Has Error" : null;
         }
 
+        /// <summary>
+        /// IDataErrorInfo.Itemの実装
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
         string IDataErrorInfo.this[string columnName]
         {
             get
@@ -98,8 +103,6 @@ namespace MVVMBase
         {
             get => ErrorMessages.Values.Any(x => x != null);
         }
-
-        //public string this[string columnName] => throw new NotImplementedException();
 
         #endregion
     }
