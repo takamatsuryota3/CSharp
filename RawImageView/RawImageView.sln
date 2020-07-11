@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2048
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RawImageView", "RawImageView\RawImageView.csproj", "{8F54399D-D438-4BD9-88BB-97845AD10FFF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F54399D-D438-4BD9-88BB-97845AD10FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F54399D-D438-4BD9-88BB-97845AD10FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F54399D-D438-4BD9-88BB-97845AD10FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F54399D-D438-4BD9-88BB-97845AD10FFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39529A3A-4E11-4F7F-BC34-346C4E9F580F}
+	EndGlobalSection
+EndGlobal
