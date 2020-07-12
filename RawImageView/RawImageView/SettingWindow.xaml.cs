@@ -10,22 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace RawImageView
 {
     /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
+    /// SettingWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SettingWindow : Window
     {
-        public MainWindow()
+        public SettingWindow()
         {
             InitializeComponent();
 
-            MainWIndowViewModel vm = new MainWIndowViewModel(this);
-            vm.CloseAction = new Action(() => this.Close());
+            SettingWindowViewModel vm = new SettingWindowViewModel(this);
+
             DataContext = vm;
         }
     }

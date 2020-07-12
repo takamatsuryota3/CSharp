@@ -5,13 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using MVVMBase;
+using Microsoft.Win32;
+using System.IO;
 
 namespace RawImageView
 {
     class MainWIndowViewModel:ViewModelBase
     {
 
-        #region 
+        #region DelegateCommand
         private DelegateCommand _openCommnad;
         public DelegateCommand OpenCommand
         {
@@ -25,6 +27,24 @@ namespace RawImageView
                 return _openCommnad;
             }
         }
+
+        private DelegateCommand _closeCommand;
+        public DelegateCommand CloseCommand
+        {
+            get
+            {
+                if (_closeCommand == null)
+                {
+                    _closeCommand = new DelegateCommand(
+                        () => { OnCloseCommand(); });
+                }
+                return _closeCommand;
+            }
+        }
+        #endregion
+
+        #region Action
+        public Action CloseAction { get; set; }
         #endregion
 
         #region Constructor
@@ -37,7 +57,32 @@ namespace RawImageView
         #region Private Method
         private void OnOpenCommand()
         {
-            MessageBox.Show("Hello World!");
+            var dialog = new OpenFileDialog();
+            dialog.Filter= "RAWファイル (*.raw)|*.raw|TIFファイル (*.tif)|*.tif";
+
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                SettingWindow sw = new SettingWindow();
+                sw.Title = Path.GetFileName( dialog.FileName);
+                sw.ShowDialog();
+            }
+        }
+
+        private void OnCloseCommand()
+        {
+            CloseAction();
+        }
+
+        private void ShowRawImage(string fileName)
+        {
+            MessageBox.Show(fileName);
+        }
+
+        private void ReadRaw(string fileName)
+        {
+
         }
         #endregion
     }
