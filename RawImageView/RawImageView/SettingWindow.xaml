@@ -43,19 +43,23 @@
         <!--BitDepth-->
         <TextBlock Text="BitDepth:" Grid.Row="3" Grid.Column="0" 
                    HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="3" Grid.Column="1" Width="100" Height="20"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" Width="100" Height="20"
+                  ItemsSource="{Binding BitDepthItems}"/>
         <!--BitPosition-->
         <TextBlock Text="BitPosition:" Grid.Row="4" Grid.Column="0" 
                    HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" Width="100" Height="20"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" Width="100" Height="20"
+                  ItemsSource="{Binding BitPositionItems}"/>
         <!--Endian-->
         <TextBlock Text="Endian:" Grid.Row="5" Grid.Column="0" 
                    HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="5" Grid.Column="1" Width="100" Height="20"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" Width="100" Height="20"
+                  ItemsSource="{Binding EndianItems}"/>
         <!--HeadColor-->
         <TextBlock Text="HeadColor:" Grid.Row="6" Grid.Column="0" 
                    HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="6" Grid.Column="1" Width="100" Height="20"/>
+        <ComboBox Grid.Row="6" Grid.Column="1" Width="100" Height="20"
+                  ItemsSource="{Binding HeadColorItems}"/>
         <!--Button-->
         <StackPanel Grid.Row="7" Grid.ColumnSpan="2" 
                     Orientation="Horizontal" HorizontalAlignment="Right">

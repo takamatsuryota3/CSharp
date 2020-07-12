@@ -57,6 +57,50 @@ namespace RawImageView
             }
         }
 
+        private string[] _bitDepthItems;
+        public string[] BitDepthItems
+        {
+            get { return _bitDepthItems; }
+            set
+            {
+                _bitDepthItems = value;
+                RaisePropertyChanged("BitDepthItems");
+            }
+        }
+
+        private string[] _bitPositionItems;
+        public string[] BitPositionItems
+        {
+            get { return _bitPositionItems; }
+            set
+            {
+                _bitPositionItems = value;
+                RaisePropertyChanged("BitPositionItems");
+            }
+        }
+
+        private string[] _endianItems;
+        public string[] EndianItems
+        {
+            get { return _endianItems; }
+            set
+            {
+                _endianItems = value;
+                RaisePropertyChanged("EndianItems");
+            }
+        }
+
+        private string[] _headColorItems;
+        public string[] HeadColorItems
+        {
+            get { return _headColorItems; }
+            set
+            {
+                _headColorItems = value;
+                RaisePropertyChanged("HeadColorItems");
+            }
+        }
+
         #endregion
 
         #region DelegateCommand
@@ -78,7 +122,10 @@ namespace RawImageView
         #region Constructor
         public SettingWindowViewModel(SettingWindow sw)
         {
-
+            BitDepthItems= Enum.GetNames(typeof(RawInformation.BitDepth));
+            BitPositionItems = Enum.GetNames(typeof(RawInformation.BitPosition));
+            EndianItems = Enum.GetNames(typeof(RawInformation.Endian));
+            HeadColorItems = Enum.GetNames(typeof(RawInformation.HeadColor));
         }
         #endregion
 

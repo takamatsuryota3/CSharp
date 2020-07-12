@@ -10,26 +10,26 @@ namespace RawImageView
     {
         public enum BitDepth
         {
-            bitDepth_8bits,
-            bitDepth_10bits,
-            bitDepth_12bits,
-            bitDepth_14bits,
-            bitDepth_16bits
+            bitDepth_8bits =8,
+            bitDepth_10bits = 10,
+            bitDepth_12bits = 12,
+            bitDepth_14bits = 14,
+            bitDepth_16bits = 16
         }
 
-        enum BitPosition
+        public enum BitPosition
         {
             LSB,
             MSB
         }
 
-        enum Endian
+        public enum Endian
         {
             LITTLE,
             BIG
         }
 
-        enum HeadColor
+        public enum HeadColor
         {
             Red,
             Green_Red,
