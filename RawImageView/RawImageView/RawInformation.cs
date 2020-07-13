@@ -10,11 +10,11 @@ namespace RawImageView
     {
         public enum BitDepth
         {
-            bitDepth_8bits =8,
-            bitDepth_10bits = 10,
-            bitDepth_12bits = 12,
-            bitDepth_14bits = 14,
-            bitDepth_16bits = 16
+            depth_8bits =8,
+            depth_10bits = 10,
+            depth_12bits = 12,
+            depth_14bits = 14,
+            depth_16bits = 16
         }
 
         public enum BitPosition

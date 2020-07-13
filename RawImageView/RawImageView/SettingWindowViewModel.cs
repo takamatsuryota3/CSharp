@@ -122,10 +122,15 @@ namespace RawImageView
         #region Constructor
         public SettingWindowViewModel(SettingWindow sw)
         {
-            BitDepthItems= Enum.GetNames(typeof(RawInformation.BitDepth));
+            string[] depth= Enum.GetNames(typeof(RawInformation.BitDepth));
+            BitDepthItems = ReplaceEnumValue(depth, "depth_", "");
+
             BitPositionItems = Enum.GetNames(typeof(RawInformation.BitPosition));
+
             EndianItems = Enum.GetNames(typeof(RawInformation.Endian));
-            HeadColorItems = Enum.GetNames(typeof(RawInformation.HeadColor));
+
+            string[] color =  Enum.GetNames(typeof(RawInformation.HeadColor));
+            HeadColorItems = ReplaceEnumValue(color, "_", " ");
         }
         #endregion
 
@@ -137,6 +142,23 @@ namespace RawImageView
                 "Height:{1}\n" +
                 "HeaderSize:{2}\n", Width, Height, HeaderSize));
         }
+
+        private string[] ReplaceEnumValue(string[] src, string srcStr, string dstStr)
+        {
+            string[] array = new string[src.Length];
+
+            string tmp = string.Empty;
+
+            for (int i = 0; i < src.Length; i++)
+            {
+                tmp = src[i].Replace(srcStr, dstStr);
+
+                array[i] = tmp;
+            }
+
+            return array;
+        }
+
         #endregion
     }
 }
