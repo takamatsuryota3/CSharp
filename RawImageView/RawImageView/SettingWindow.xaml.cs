@@ -24,7 +24,7 @@ namespace RawImageView
             InitializeComponent();
 
             SettingWindowViewModel vm = new SettingWindowViewModel(this);
-
+            vm.CloseAction = new Action(() => this.Close());
             DataContext = vm;
         }
     }

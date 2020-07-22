@@ -36,7 +36,7 @@ namespace RawImageView
                 if (_closeCommand == null)
                 {
                     _closeCommand = new DelegateCommand(
-                        () => { OnCloseCommand(); });
+                        () => { CloseAction?.Invoke(); });
                 }
                 return _closeCommand;
             }
@@ -68,11 +68,6 @@ namespace RawImageView
                 sw.Title = Path.GetFileName( dialog.FileName);
                 sw.ShowDialog();
             }
-        }
-
-        private void OnCloseCommand()
-        {
-            CloseAction();
         }
 
         private void ShowRawImage(string fileName)
