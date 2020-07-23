@@ -4,13 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RawImageView"
-        xmlns:conv ="clr-namespace:RawImageView.Converter"
         mc:Ignorable="d"
         Title="SettingWindow" Height="300" Width="300"
         ResizeMode="NoResize" Background="LightGray">
-    <Window.Resources>
-        <conv:EnumValueConverter x:Key="enumConv"/>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -48,8 +44,10 @@
         <TextBlock Text="BitDepth:" Grid.Row="3" Grid.Column="0" 
                    HorizontalAlignment="Center"  VerticalAlignment="Center"/>
         <ComboBox Grid.Row="3" Grid.Column="1" Width="100" Height="20"
-                  ItemsSource="{Binding BitDepthItems}"
-                  SelectedIndex="{Binding SelectedBitDepth}"/>
+                  ItemsSource="{Binding BitDepth_List}"
+                  SelectedValuePath="BitDepthData"
+                  DisplayMemberPath="DisplayBitDepthData"
+                  SelectedValue="{Binding SelectedBitDepth, Mode=TwoWay}"/>
         <!--BitPosition-->
         <TextBlock Text="BitPosition:" Grid.Row="4" Grid.Column="0" 
                    HorizontalAlignment="Center"  VerticalAlignment="Center"/>
