@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RawImageView"
+        xmlns:conv ="clr-namespace:RawImageView.Converter"
         mc:Ignorable="d"
-        Title="SettingWindow" Height="450" Width="300"
+        Title="SettingWindow" Height="300" Width="300"
         ResizeMode="NoResize" Background="LightGray">
+    <Window.Resources>
+        <conv:EnumValueConverter x:Key="enumConv"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -45,7 +49,7 @@
                    HorizontalAlignment="Center"  VerticalAlignment="Center"/>
         <ComboBox Grid.Row="3" Grid.Column="1" Width="100" Height="20"
                   ItemsSource="{Binding BitDepthItems}"
-                  SelectedValuePath="{Binding BitDepthData}" DisplayMemberPath="{Binding DisplayBifDepthData}"/>
+                  SelectedIndex="{Binding SelectedBitDepth}"/>
         <!--BitPosition-->
         <TextBlock Text="BitPosition:" Grid.Row="4" Grid.Column="0" 
                    HorizontalAlignment="Center"  VerticalAlignment="Center"/>
@@ -62,12 +66,14 @@
         <TextBlock Text="HeadColor:" Grid.Row="6" Grid.Column="0" 
                    HorizontalAlignment="Center"  VerticalAlignment="Center"/>
         <ComboBox Grid.Row="6" Grid.Column="1" Width="100" Height="20"
-                  ItemsSource="{Binding HeadColorItems}"/>
+                  ItemsSource="{Binding HeadColorItems}"
+                  SelectedIndex="{Binding SelectedHeadColor}"/>
         <!--Button-->
         <StackPanel Grid.Row="7" Grid.ColumnSpan="2" 
                     Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="OK" Width="50" Height="20" Command="{Binding OKButtonClickCommand}" />
-            <Button Content="Cancel" Width="50" Height="20" Margin="20,0,20,0"/>
+            <Button Content="Cancel" Width="50" Height="20" Margin="20,0,20,0"
+                    Command="{Binding CancelButtonClickCommand}"/>
         </StackPanel>
     </Grid>
 </Window>

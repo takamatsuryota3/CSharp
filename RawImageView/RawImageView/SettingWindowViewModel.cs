@@ -14,7 +14,7 @@ namespace RawImageView
         public class BitDepthItem
         {
             public RawInformation.BitDepth BitDepthData { get; set; }
-            public string DisplayBifDepthData { get; set; }
+            public string DisplayBitDepthData { get; set; }
         }
 
         #region Property
@@ -63,6 +63,9 @@ namespace RawImageView
             }
         }
 
+        /// <summary>
+        /// BitDepth
+        /// </summary>
         private string[] _bitDepthItems;
         public string[] BitDepthItems
         {
@@ -74,13 +77,13 @@ namespace RawImageView
             }
         }
 
-        private List<BitDepthItem> _items;
-        public List<BitDepthItem> Items
+        private List<BitDepthItem> _bitDepth_List;
+        public List<BitDepthItem> BitDepth_List
         {
-            get { return _items; }
+            get { return _bitDepth_List; }
             set
             {
-                _items = value;
+                _bitDepth_List = value;
                 RaisePropertyChanged("Items");
             }
         }
@@ -96,6 +99,9 @@ namespace RawImageView
             }
         }
 
+        /// <summary>
+        /// BitPosition
+        /// </summary>
         private string[] _bitPositionItems;
         public string[] BitPositionItems
         {
@@ -117,7 +123,9 @@ namespace RawImageView
             }
         }
 
-
+        /// <summary>
+        /// Endian
+        /// </summary>
         private string[] _endianItems;
         public string[] EndianItems
         {
@@ -140,6 +148,9 @@ namespace RawImageView
             }
         }
 
+        /// <summary>
+        /// HeadColor
+        /// </summary>
         private string[] _headColorItems;
         public string[] HeadColorItems
         {
@@ -148,6 +159,17 @@ namespace RawImageView
             {
                 _headColorItems = value;
                 RaisePropertyChanged("HeadColorItems");
+            }
+        }
+
+        private int _selectedHeadColor;
+        public int SelectedHeadColor
+        {
+            get { return _selectedHeadColor; }
+            set
+            {
+                _selectedHeadColor = value;
+                RaisePropertyChanged("SelectedHeadColor");
             }
         }
 
@@ -170,6 +192,24 @@ namespace RawImageView
                 return _okButtonClickCommand;
             }
         }
+
+        private DelegateCommand _cancelButtonClickCommand;
+        public DelegateCommand CancelButtonClickCommand
+        {
+            get
+            {
+                if (_cancelButtonClickCommand == null)
+                {
+                    _cancelButtonClickCommand = new DelegateCommand(
+                        () =>
+                        {
+                            CloseAction?.Invoke();
+                        });
+                }
+                return _cancelButtonClickCommand;
+            }
+        }
+
         #endregion
 
         #region Action
@@ -181,14 +221,17 @@ namespace RawImageView
         {
             string[] depth= Enum.GetNames(typeof(RawInformation.BitDepth));
             BitDepthItems = ReplaceEnumValue(depth, "depth_", "");
-            Items = new List<BitDepthItem>
+            var Items = new List<BitDepthItem>
             {
-                new BitDepthItem(){BitDepthData = RawInformation.BitDepth.depth_8bits, DisplayBifDepthData = BitDepthItems[0]},
-                new BitDepthItem(){BitDepthData = RawInformation.BitDepth.depth_10bits, DisplayBifDepthData = BitDepthItems[1]},
-                new BitDepthItem(){BitDepthData = RawInformation.BitDepth.depth_12bits, DisplayBifDepthData = BitDepthItems[2]},
-                new BitDepthItem(){BitDepthData = RawInformation.BitDepth.depth_14bits, DisplayBifDepthData = BitDepthItems[3]},
-                new BitDepthItem(){BitDepthData = RawInformation.BitDepth.depth_16bits, DisplayBifDepthData = BitDepthItems[4]}
+                new BitDepthItem(){BitDepthData = RawInformation.BitDepth.depth_8bits, DisplayBitDepthData = BitDepthItems[0]},
+                new BitDepthItem(){BitDepthData = RawInformation.BitDepth.depth_10bits, DisplayBitDepthData = BitDepthItems[1]},
+                new BitDepthItem(){BitDepthData = RawInformation.BitDepth.depth_12bits, DisplayBitDepthData = BitDepthItems[2]},
+                new BitDepthItem(){BitDepthData = RawInformation.BitDepth.depth_14bits, DisplayBitDepthData = BitDepthItems[3]},
+                new BitDepthItem(){BitDepthData = RawInformation.BitDepth.depth_16bits, DisplayBitDepthData = BitDepthItems[4]}
             };
+
+            BitDepth_List = Items;
+
             SelectedBitDepth = RawInformation.BitDepth.depth_8bits;
 
 
@@ -200,6 +243,7 @@ namespace RawImageView
 
             string[] color =  Enum.GetNames(typeof(RawInformation.HeadColor));
             HeadColorItems = ReplaceEnumValue(color, "_", " ");
+            SelectedHeadColor = (int)RawInformation.HeadColor.Red;
         }
         #endregion
 
@@ -209,7 +253,11 @@ namespace RawImageView
             MessageBox.Show(string.Format(
                 "Width:{0}\n" +
                 "Height:{1}\n" +
-                "HeaderSize:{2}\n", Width, Height, HeaderSize));
+                "HeaderSize:{2}\n" +
+                "BitDepth:{3}\n" +
+                "BitPosition:{4}\n" +
+                "Endian:{5}\n" +
+                "HeadColor:{6}", Width, Height, HeaderSize, SelectedBitDepth,SelectedBitPosition,SelectedEndian,SelectedHeadColor));
         }
 
         private string[] ReplaceEnumValue(string[] src, string srcStr, string dstStr)
