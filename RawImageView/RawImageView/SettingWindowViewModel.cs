@@ -250,14 +250,15 @@ namespace RawImageView
         #region Private Method
         private void OnOKButtonClickCommand()
         {
-            MessageBox.Show(string.Format(
-                "Width:{0}\n" +
-                "Height:{1}\n" +
-                "HeaderSize:{2}\n" +
-                "BitDepth:{3}\n" +
-                "BitPosition:{4}\n" +
-                "Endian:{5}\n" +
-                "HeadColor:{6}", Width, Height, HeaderSize, SelectedBitDepth,SelectedBitPosition,SelectedEndian,SelectedHeadColor));
+            // MainWindowにデータを渡す
+            MainWindow mw = new MainWindow();
+            mw.Width = Width;
+            mw.Height = Height;
+            mw.HeaderSize = HeaderSize;
+            mw.BitDepth = SelectedBitDepth;
+            mw.BitPosition = SelectedBitPosition;
+            mw.Endian = SelectedEndian;
+            mw.HeadColor = SelectedHeadColor;
         }
 
         private string[] ReplaceEnumValue(string[] src, string srcStr, string dstStr)
