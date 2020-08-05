@@ -12,6 +12,7 @@ namespace RawImageView
 {
     class MainWIndowViewModel:ViewModelBase
     {
+        MainWindow mainWindow = null;
 
         #region Property
         private int _width;
@@ -130,7 +131,7 @@ namespace RawImageView
         #region Constructor
         public MainWIndowViewModel(MainWindow main)
         {
-
+            mainWindow = main;
         }
         #endregion
 
@@ -144,9 +145,12 @@ namespace RawImageView
 
             if (result == true)
             {
-                SettingWindow sw = new SettingWindow();
+                SettingWindow sw = new SettingWindow
+                {
+                    Owner = mainWindow
+                };
                 sw.Title = Path.GetFileName( dialog.FileName);
-                sw.ShowDialog();
+                sw.Show();
             }
         }
 
@@ -155,18 +159,45 @@ namespace RawImageView
             MessageBox.Show(fileName);
         }
 
-        private void ReadRaw(string fileName)
+        private ushort[] ReadRaw(string fileName, int width, int height, int endian, RawInformation.BitDepth bitDepth, int bitPosition)
         {
-            MessageBox.Show(string.Format(
-             "Width:{0}\n" +
-             "Height:{1}\n" +
-             "HeaderSize:{2}\n" +
-             "BitDepth:{3}\n" +
-             "BitPosition:{4}\n" +
-             "Endian:{5}\n" +
-             "HeadColor:{6}",
-             Width, Height, HeaderSize, BitDepth, 
-             BitPosition, Endian, HeadColor));
+            // Ushort型の配列を定義
+            ushort[] result = new ushort[width * height];
+            // Ushort型の変数を定義
+            ushort val = 0;
+
+            int depth = (int)bitDepth;
+            int shift = 16 - depth;
+
+            FileStream fs = new FileStream(fileName, FileMode.Open);
+            BinaryReader br = new BinaryReader(fs);
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                // Endianに応じて処理
+                if (endian == (int)RawInformation.Endian.LITTLE)
+                {
+                    val = (ushort)(br.ReadByte() >> 1 + br.ReadByte());
+                }
+                else if (endian == (int)RawInformation.Endian.BIG)
+                {
+                    val = (ushort)(br.ReadByte() + br.ReadByte() >> 1);
+                }
+                // BitPositionに応じて処理
+                if (bitPosition == (int)RawInformation.BitPosition.LSB)
+                {
+                    // 何もしない
+                }
+                else if (bitPosition == (int)RawInformation.BitPosition.MSB)
+                {
+
+                }
+                // BitDepthに応じてシフト処理
+                val = (ushort)(val >> shift);
+            }
+
+            // Ushort型の配列をリターン
+            return result;
         }
         #endregion
     }
