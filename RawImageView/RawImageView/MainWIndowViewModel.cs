@@ -7,6 +7,8 @@ using System.Windows;
 using MVVMBase;
 using Microsoft.Win32;
 using System.IO;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace RawImageView
 {
@@ -149,14 +151,27 @@ namespace RawImageView
                 {
                     Owner = mainWindow
                 };
-                sw.Title = Path.GetFileName( dialog.FileName);
-                sw.Show();
+
+                ShowRawImage(dialog.FileName, sw);
             }
         }
 
-        private void ShowRawImage(string fileName)
+        private void ShowRawImage(string fileName, SettingWindow sw)
         {
-            MessageBox.Show(fileName);
+            SettingWindowViewModel svm = new SettingWindowViewModel(sw);
+
+            sw.Title = Path.GetFileName(fileName);
+            sw.Show();
+
+            if (svm.OKButtonClicked == true)
+            {
+                // ReadRaw
+                ushort[] array = ReadRaw(fileName, Width, Height, Endian, BitDepth, BitPosition);
+
+                // CreateRGB
+                // Create Bitmap
+
+            }
         }
 
         private ushort[] ReadRaw(string fileName, int width, int height, int endian, RawInformation.BitDepth bitDepth, int bitPosition)
@@ -168,6 +183,7 @@ namespace RawImageView
 
             int depth = (int)bitDepth;
             int shift = 16 - depth;
+            int shif = depth - 8;
 
             FileStream fs = new FileStream(fileName, FileMode.Open);
             BinaryReader br = new BinaryReader(fs);
@@ -177,11 +193,11 @@ namespace RawImageView
                 // Endianに応じて処理
                 if (endian == (int)RawInformation.Endian.LITTLE)
                 {
-                    val = (ushort)(br.ReadByte() >> 1 + br.ReadByte());
+                    val = (ushort)(br.ReadByte() >> 8 + br.ReadByte());
                 }
                 else if (endian == (int)RawInformation.Endian.BIG)
                 {
-                    val = (ushort)(br.ReadByte() + br.ReadByte() >> 1);
+                    val = (ushort)(br.ReadByte() + br.ReadByte() >> 8);
                 }
                 // BitPositionに応じて処理
                 if (bitPosition == (int)RawInformation.BitPosition.LSB)
@@ -190,14 +206,36 @@ namespace RawImageView
                 }
                 else if (bitPosition == (int)RawInformation.BitPosition.MSB)
                 {
-
+                    val = (ushort)(val >> shift);
                 }
+
                 // BitDepthに応じてシフト処理
-                val = (ushort)(val >> shift);
+                val = (ushort)(val >> shif);
             }
+
+            fs.Close();
+            fs.Dispose();
+            br.Close();
+            br.Dispose();
+
 
             // Ushort型の配列をリターン
             return result;
+        }
+
+        private void CreateRGB()
+        {
+            // ushort型の配列から、byte型のr,g,bの配列に振り分ける
+            
+        }
+
+        private BitmapSource CreateBitmap(int width, int height, int dpi_x, int dpi_y)
+        {
+            byte[] array = new byte[0];
+            int stride = ((width * PixelFormats.Bgr32.BitsPerPixel + 31) / 32) * 4;
+            BitmapSource bmp = BitmapSource.Create(width, height, 96, 96, PixelFormats.Bgr32, null, array, stride);
+
+            return bmp;
         }
         #endregion
     }

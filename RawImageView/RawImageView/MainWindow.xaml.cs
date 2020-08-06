@@ -23,12 +23,12 @@ namespace RawImageView
         MainWIndowViewModel vm = null;
         // SettingWindowから受取るもの
         // Width
-        public int Width
+        public int WidthValue
         {
             set { vm.Width = value; }
         }
         // Height
-        public int Height
+        public int HeightValue
         {
             set { vm.Height = value; }
         }

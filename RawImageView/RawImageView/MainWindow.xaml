@@ -21,7 +21,7 @@
         <ScrollViewer Grid.Row="1"
             HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Auto">
-            <Image />
+            <Image  Source="{Binding}"/>
         </ScrollViewer>
     </Grid>
 </Window>

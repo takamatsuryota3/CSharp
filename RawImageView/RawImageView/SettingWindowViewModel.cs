@@ -17,6 +17,8 @@ namespace RawImageView
             public string DisplayBitDepthData { get; set; }
         }
 
+        public bool OKButtonClicked = false;
+
         #region Property
         /// <summary>
         /// Width
@@ -186,6 +188,7 @@ namespace RawImageView
                     _okButtonClickCommand = new DelegateCommand(
                         () => {
                                 OnOKButtonClickCommand();
+                            OKButtonClicked = true;
                             CloseAction?.Invoke();
                         });
                 }
@@ -203,6 +206,7 @@ namespace RawImageView
                     _cancelButtonClickCommand = new DelegateCommand(
                         () =>
                         {
+                            OKButtonClicked = false;
                             CloseAction?.Invoke();
                         });
                 }
@@ -252,8 +256,8 @@ namespace RawImageView
         {
             // MainWindowにデータを渡す
             MainWindow mw = new MainWindow();
-            mw.Width = Width;
-            mw.Height = Height;
+            mw.WidthValue = Width;
+            mw.HeightValue = Height;
             mw.HeaderSize = HeaderSize;
             mw.BitDepth = SelectedBitDepth;
             mw.BitPosition = SelectedBitPosition;
