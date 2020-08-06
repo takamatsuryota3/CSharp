@@ -94,6 +94,17 @@ namespace RawImageView
             }
         }
 
+        private BitmapSource _bitmapImage;
+        public BitmapSource BitmapImage
+        {
+            get { return _bitmapImage; }
+            set
+            {
+                _bitmapImage = value;
+                RaisePropertyChanged("BitmapImage");
+            }
+        }
+
         #endregion
 
         #region DelegateCommand
@@ -177,7 +188,8 @@ namespace RawImageView
         private ushort[] ReadRaw(string fileName, int width, int height, int endian, RawInformation.BitDepth bitDepth, int bitPosition)
         {
             // Ushort型の配列を定義
-            ushort[] result = new ushort[width * height];
+            int length = (width * height) >> 2;
+            ushort[] result = new ushort[length];
             // Ushort型の変数を定義
             ushort val = 0;
 
@@ -223,15 +235,33 @@ namespace RawImageView
             return result;
         }
 
-        private void CreateRGB()
+        private void CreateRGB(ushort[] array, byte[] red, byte[] green, byte[] blue)
         {
+            ushort[] r = new ushort[Width * Height];
+            ushort[] gr = new ushort[Width * Height];
+            ushort[] gb = new ushort[Width * Height];
+            ushort[] b = new ushort[Width * Height];
             // ushort型の配列から、byte型のr,g,bの配列に振り分ける
-            
+            int cnt = 0;
+            for (int j = 0; j < Height; j++)
+            {
+                for (int i = 0; i < Width; i++)
+                {
+                    r[cnt] = array[i + j];
+                    gr[cnt] = (byte)array[i + j]; 
+                    gb[cnt] = (byte)array[i + j];
+                    b[cnt] = (byte)array[i + j];
+
+                    red[cnt] = (byte)r[cnt];
+                    green[cnt] = (byte)((gr[cnt] + gb[cnt]) >> 1);
+                    blue[cnt] = (byte)b[cnt];
+                }
+            }
         }
 
         private BitmapSource CreateBitmap(int width, int height, int dpi_x, int dpi_y)
         {
-            byte[] array = new byte[0];
+            byte[] array = new byte[width * height];
             int stride = ((width * PixelFormats.Bgr32.BitsPerPixel + 31) / 32) * 4;
             BitmapSource bmp = BitmapSource.Create(width, height, 96, 96, PixelFormats.Bgr32, null, array, stride);
 
